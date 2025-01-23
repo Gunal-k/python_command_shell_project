@@ -36,7 +36,10 @@ def main():
         elif command.startswith("pwd"):
             sys.stdout.write(f"{os.getcwd()}\n")
         elif command.startswith("cd"):
-            os.chdir(command[3:])
+            try:
+                os.chdir(command[3:])
+            except FileNotFoundError:
+                sys.stdout.write(f"cd: {command[3:]}: No such file or directory\n")
         else:
             res = subprocess.run(command, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             sys.stdout.write(f"{res.stdout.decode()}")
