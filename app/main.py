@@ -11,7 +11,6 @@ def main():
 
         if command.startswith("invalid"):
             sys.stdout.write(f"{command}: command not found\n")
-            sys.exit()
 
 if __name__ == "__main__":
     main()
