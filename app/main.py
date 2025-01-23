@@ -6,8 +6,11 @@ def main():
     sys.stdout.write("$ ")
 
     # Wait for user input
-    input()
+    command = input()
 
+    if command == "invalid command":
+        sys.stdout.write(f"{command}: command not found\n")
+        sys.exit()
 
 if __name__ == "__main__":
     main()
