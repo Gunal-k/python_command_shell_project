@@ -20,7 +20,7 @@ def main():
         elif command.startswith("echo"):
             value = command[5:]
             if "\\" in value:
-                value = value.replace("\\","")
+                value = " ".join(value.split("\\"))
             else:
                 value = " ".join(shlex.split(value))
             if value.startswith("'") or value.startswith('"'):
