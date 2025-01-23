@@ -16,6 +16,7 @@ def main():
         if command.startswith("exit"):
             sys.exit(0)
         elif ">" in command:
+            command = command.replace("1>",">")
             cmd , out = command.split(">")
             with open(out.strip(), "w") as f:
                 f.write(cat(cmd.strip()))
