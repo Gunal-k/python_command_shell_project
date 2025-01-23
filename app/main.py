@@ -21,6 +21,8 @@ def main():
             res = cat(cmd.strip())
             with open(out.strip(), "a") as f:
                 f.write(res.stderr.decode())
+            if res.stdout:
+                sys.stdout.write(f"{res.stdout.decode()}")
         elif ">>" in command:
             command = command.replace("1>>",">>")
             cmd , out = command.split(">>")
