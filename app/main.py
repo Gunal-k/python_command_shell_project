@@ -2,7 +2,7 @@ import sys
 import os
 import subprocess
 import shlex
-import readLine
+import readline
 
 builtins = ["exit", "echo","type","pwd","cd"]
 
@@ -17,6 +17,7 @@ def main():
     # Uncomment this block to pass the first stage
     readline.set_completer(completer)
     readline.parse_and_bind("tab: complete")
+    
     while True:
         sys.stdout.write("$ ")
 
