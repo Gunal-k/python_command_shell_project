@@ -25,17 +25,12 @@ def main():
             cmnd = cmd_args[0]
             args = None
 
-            for path in cmd_args[1:]:
-                if os.path.exists(path):
-                    args = path
-                    break
-                else:
-                    errors += f"{cmnd}: {path}: No such file directory\n"
+            res = subprocess.run(command, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            errors += f"{cmnd}: {res.stderr.decode()}: No such file directory\n"
 
-            if args:
+            if res.stdout:
                 with open(out, "w") as f_out:
-                    with open(args, "r") as f_in:
-                        f_out.write(f_in.read())
+                    f_out.write(res.stdout.decode())
 
             if errors:
                 sys.stdout.write(errors)
