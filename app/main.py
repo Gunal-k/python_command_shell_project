@@ -18,14 +18,15 @@ def main():
         elif ">" in command:
             cmnd = command.split()[0]
             command= command.split()[1].replace("1>", ">")
-            cmd = command.split(">")
-            cmd_args = shlex.split(cmd[0])
+            cmd = command.split(">")[0]
+            out = command.split(">")[1]
+            cmd_args = shlex.split(cmd)
             for path in cmd_args:
                 if os.path.exists(path):
                    args = path
                 else:
                     errors = f"{cmnd}: {path}: No such file directory\n"
-            with open(cmd[1], "w") as f:
+            with open(out, "w") as f:
                 with open(args, "r") as f2:
                     f.write(f2.read())
             if errors:
