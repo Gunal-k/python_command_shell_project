@@ -1,5 +1,5 @@
 import sys
-
+import os
 
 def main():
     # Uncomment this block to pass the first stage
@@ -9,6 +9,7 @@ def main():
         # Wait for user input
         command = input()
         builtins = ["exit", "echo","type"]
+        PATH = os.getenv("PATH")
 
         if command.startswith("exit"):
             sys.exit(0)
@@ -19,8 +20,15 @@ def main():
             sys.stdout.write(f"{value}\n")
         elif command.startswith("type"):
             value = command[5:]
+            cmd_path = None
+            paths = PATH.split(":")
+            for path in paths:
+                if os.path.exists(f"{path}/{value}"):
+                    cmd_path = f"{path}/{value}"    
             if value in builtins:
                 sys.stdout.write(f"{value} is a shell builtin\n")
+            elif cmd_path:
+                sys.stdout.write(f"{value} is {cmd_path}\n")
             else:
                 sys.stdout.write(f"{value}: not found\n")
 
