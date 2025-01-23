@@ -9,6 +9,8 @@ def main():
         # Wait for user input
         command = input()
 
+        if command.startswith("exit"):
+            sys.exit(0)
         if command.startswith("invalid"):
             sys.stdout.write(f"{command}: command not found\n")
 
