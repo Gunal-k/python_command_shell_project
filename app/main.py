@@ -20,11 +20,11 @@ def main():
         elif command.startswith("echo"):
             value = command[5:]
             if "\\" in value:
-                value = "".join(value.split("\\"))
+                value =value.replace("\\","")
+            elif value.startswith("'") or value.startswith('"'):
+                value = value[1:-1]
             else:
                 value = " ".join(shlex.split(value))
-            if value.startswith("'") or value.startswith('"'):
-                value = value[1:-1]
             sys.stdout.write(f"{value}\n")
         elif command.startswith("type"):
             value = command[5:]
