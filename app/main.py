@@ -25,7 +25,7 @@ def main():
                    args = path
                 else:
                     errors = f"{cmnd}: {path}: No such file directory\n"
-            with open(cmd[2], "w") as f:
+            with open(cmd[1], "w") as f:
                 with open(args, "r") as f2:
                     f.write(f2.read())
             if errors:
