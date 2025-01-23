@@ -22,7 +22,7 @@ def main():
             if value in builtins:
                 sys.stdout.write(f"{value} is a shell builtin\n")
             else:
-                sys.stdout.write(f"{value}: command not found\n")
+                sys.stdout.write(f"{value}: not found\n")
 
 if __name__ == "__main__":
     main()
