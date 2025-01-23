@@ -33,13 +33,13 @@ def completer(text, state):
         sys.stdout.flush()
         return None
     elif last_tab_pressed["count"] == 2:
-        if options:
+        if options2:
             sys.stdout.write("\n" + "  ".join(options2) + "\n")
             sys.stdout.write(f"$ {text}")
             sys.stdout.flush()
         last_tab_pressed["count"] = 0
         return None
-    return options[state] if state < len(options) else None
+    return options[state] if state < len(options2) else None
 
 def main():
     # Uncomment this block to pass the first stage
