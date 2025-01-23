@@ -10,7 +10,7 @@ def main():
 
         # Wait for user input
         command = input()
-        builtins = ["exit", "echo","type"]
+        builtins = ["exit", "echo","type","pwd"]
         PATH = os.getenv("PATH")
 
         if command.startswith("exit"):
