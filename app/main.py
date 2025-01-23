@@ -10,7 +10,7 @@ def main():
 
         # Wait for user input
         command = input()
-        builtins = ["exit", "echo","type","pwd"]
+        builtins = ["exit", "echo","type","pwd","cd"]
         PATH = os.getenv("PATH")
 
         if command.startswith("exit"):
@@ -35,6 +35,8 @@ def main():
                 sys.stdout.write(f"{value}: not found\n")
         elif command.startswith("pwd"):
             sys.stdout.write(f"{os.getcwd()}\n")
+        elif command.startswith("cd"):
+            os.chdir(command[3:])
         else:
             res = subprocess.run(command, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             sys.stdout.write(f"{res.stdout.decode()}")
