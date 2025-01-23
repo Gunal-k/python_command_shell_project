@@ -15,7 +15,7 @@ def executables():
     return executables
 
 def completer(text, state):
-    options = [s for s in builtins + get_executables() if s.startswith(text)]
+    options = [s for s in builtins + executables() if s.startswith(text)]
     if state < len(options):
         return options[state] + " "  # Add a space to the completion
     else:
