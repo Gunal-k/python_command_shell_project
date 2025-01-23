@@ -39,7 +39,7 @@ def completer(text, state):
             sys.stdout.flush()
         last_tab_pressed["count"] = 0
         return None
-    return options[state] if state < len(options2) else None
+    return options[state] if state < len(options) else None
 
 def main():
     # Uncomment this block to pass the first stage
