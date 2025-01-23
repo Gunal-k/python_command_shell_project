@@ -23,6 +23,7 @@ def main():
                 f.write(res.stdout.decode())
             if res.stderr:
                 sys.stderr.write(f"{res.stderr.decode()}\n")
+            sys.stdout.flush()
         elif command.startswith("invalid"):
             sys.stdout.write(f"{command}: command not found\n")
         elif command.startswith("echo"):
