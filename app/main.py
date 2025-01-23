@@ -11,8 +11,11 @@ def main():
 
         if command.startswith("exit"):
             sys.exit(0)
-        if command.startswith("invalid"):
+        elif command.startswith("invalid"):
             sys.stdout.write(f"{command}: command not found\n")
+        elif command.startswith("echo"):
+            value = command[5:]
+            sys.stdout.write(f"{value}\n")
 
 if __name__ == "__main__":
     main()
