@@ -34,7 +34,7 @@ def main():
             else:
                 sys.stdout.write(f"{value}: not found\n")
         else:
-            res = subprocess.run(shlex.split(command), shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            res = subprocess.run(command.split(), shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             sys.stdout.write(f"{res.stdout.decode()}")
 if __name__ == "__main__":
     main()
