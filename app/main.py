@@ -6,8 +6,17 @@ import readLine
 
 builtins = ["exit", "echo","type","pwd","cd"]
 
+def completer(text, state):
+    options = [s for s in builtins if s.startswith(text)]
+    if state < len(options):
+        return options[state]
+    else:
+        return None
+
 def main():
     # Uncomment this block to pass the first stage
+    readline.set_completer(completer)
+    readline.parse_and_bind("tab: complete")
     while True:
         sys.stdout.write("$ ")
 
@@ -15,8 +24,6 @@ def main():
         command = input()
         PATH = os.getenv("PATH")
 
-        readline.set_completer(completer)
-        readline.parse_and_bind("tab: complete")
 
         if command.startswith("exit"):
             sys.exit(0)
@@ -91,12 +98,7 @@ def cat(cmd):
     res = subprocess.run(cmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     return res
 
-def completer(text, state):
-    options = [s for s in builtins if s.startswith(text)]
-    if state < len(options):
-        return options[state]
-    else:
-        return None
+
 
 if __name__ == "__main__":
     main()
