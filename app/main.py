@@ -19,7 +19,7 @@ def main():
             sys.stdout.write(f"{command}: command not found\n")
         elif command.startswith("echo"):
             value = command[5:].strip()
-            if "\\\\" in value:
+            if "\\" in value:
                 value = "".join(shlex.split(value))
             elif "\\" in value:
                 value = value.replace("\\","")
