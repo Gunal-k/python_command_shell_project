@@ -33,8 +33,11 @@ def main():
                 sys.stdout.write(f"{value} is {cmd_path}\n")
             else:
                 sys.stdout.write(f"{value}: not found\n")
+        elif command.startswith("pwd"):
+            sys.stdout.write(f"{os.getcwd()}\n")
         else:
             res = subprocess.run(command, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             sys.stdout.write(f"{res.stdout.decode()}")
+        sys.stdout.flush()
 if __name__ == "__main__":
     main()
