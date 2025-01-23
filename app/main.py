@@ -21,7 +21,8 @@ def executables():
 
 def completer(text, state):
     global last_tab_pressed
-    options = [s for s in builtins + executables() if s.startswith(text)]
+    options = [s for s in builtins if s.startswith(text)]
+    options2 = [s for s in builtins + executables() if s.startswith(text)]
     if state == 0:
         if last_tab_pressed["last_text"] == text:
             last_tab_pressed["count"] += 1
@@ -33,7 +34,7 @@ def completer(text, state):
         return None
     elif last_tab_pressed["count"] == 2:
         if options:
-            sys.stdout.write("\n" + "  ".join(options) + "\n")
+            sys.stdout.write("\n" + "  ".join(options2) + "\n")
             sys.stdout.write(f"$ {text}")
             sys.stdout.flush()
         last_tab_pressed["count"] = 0
