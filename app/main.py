@@ -22,7 +22,7 @@ def main():
             if "\\" in value:
                 value = value.replace("\\","")
             elif value.startswith("'") or value.startswith('"'):
-                value =" ".join(value.split("\"").trim())
+                value =" ".join(value.split("\"").strip())
             else:
                 value = " ".join(shlex.split(value))
             sys.stdout.write(f"{value}\n")
