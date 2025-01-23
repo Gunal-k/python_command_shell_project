@@ -28,7 +28,7 @@ def completer(text, state):
         else:
             last_tab_pressed = {"count": 1, "last_text": text}
     if last_tab_pressed["count"] == 1:
-        sys.stdout.write("\a")
+        sys.stdout.write(options[state] + " ")
         sys.stdout.flush()
         return None
     elif last_tab_pressed["count"] == 2:
