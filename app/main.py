@@ -5,6 +5,7 @@ import shlex
 import readline
 
 builtins = ["exit", "echo","type","pwd","cd"]
+last_tab_pressed = {"count": 0, "last_text": ""}
 
 def executables():
     executables = []
@@ -15,11 +16,25 @@ def executables():
     return executables
 
 def completer(text, state):
+    global last_tab_pressed
     options = [s for s in builtins + executables() if s.startswith(text)]
-    if state < len(options):
-        return options[state] + " "  # Add a space to the completion
-    else:
+    if state == 0:
+        if last_tab_pressed["last_text"] == text:
+            last_tab_pressed["count"] += 1
+        else:
+            last_tab_pressed = {"count": 1, "last_text": text}
+    if last_tab_pressed["count"] == 1:
+        sys.stdout.write("\a")
+        sys.stdout.flush()
         return None
+    elif last_tab_pressed["count"] == 2:
+        if options:
+            sys.stdout.write("\n" + "  ".join(options) + "\n")
+            sys.stdout.write(f"$ {text}")
+            sys.stdout.flush()
+        last_tab_pressed["count"] = 0
+        return None
+    return options[state] if state < len(options) else None
 
 def main():
     # Uncomment this block to pass the first stage
