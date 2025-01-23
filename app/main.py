@@ -20,9 +20,9 @@ def main():
         elif command.startswith("echo"):
             value = command[5:]
             if "\\" in value:
-                value =value.replace("\\","")
+                value = value.replace("\\","")
             elif value.startswith("'") or value.startswith('"'):
-                value = value[1:-1]
+                value = value.replace("'","").replace('"',"")
             else:
                 value = " ".join(shlex.split(value))
             sys.stdout.write(f"{value}\n")
