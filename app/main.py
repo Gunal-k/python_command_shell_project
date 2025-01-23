@@ -2,6 +2,9 @@ import sys
 import os
 import subprocess
 import shlex
+import readLine
+
+builtins = ["exit", "echo","type","pwd","cd"]
 
 def main():
     # Uncomment this block to pass the first stage
@@ -10,8 +13,10 @@ def main():
 
         # Wait for user input
         command = input()
-        builtins = ["exit", "echo","type","pwd","cd"]
         PATH = os.getenv("PATH")
+
+        readline.set_completer(completer)
+        readline.parse_and_bind("tab: complete")
 
         if command.startswith("exit"):
             sys.exit(0)
@@ -80,9 +85,18 @@ def main():
             res = cat(command)
             sys.stdout.write(f"{res.stdout.decode()}")
         sys.stdout.flush()
+        sys.stderr.flush()
 
 def cat(cmd):
     res = subprocess.run(cmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     return res
+
+def completer(text, state):
+    options = [s for s in builtins if s.startswith(text)]
+    if state < len(options):
+        return options[state]
+    else:
+        return None
+
 if __name__ == "__main__":
     main()
