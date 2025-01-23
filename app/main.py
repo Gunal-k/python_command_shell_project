@@ -9,7 +9,7 @@ builtins = ["exit", "echo","type","pwd","cd"]
 def completer(text, state):
     options = [s for s in builtins if s.startswith(text)]
     if state < len(options):
-        return options[state]
+        return options[state]+" "
     else:
         return None
 
@@ -17,7 +17,7 @@ def main():
     # Uncomment this block to pass the first stage
     readline.set_completer(completer)
     readline.parse_and_bind("tab: complete")
-    
+
     while True:
         sys.stdout.write("$ ")
 
