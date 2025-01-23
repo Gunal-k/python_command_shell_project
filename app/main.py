@@ -8,7 +8,7 @@ def main():
 
         # Wait for user input
         command = input()
-        builtins = ["exit", "echo"]
+        builtins = ["exit", "echo","type"]
 
         if command.startswith("exit"):
             sys.exit(0)
