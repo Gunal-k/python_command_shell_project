@@ -8,11 +8,15 @@ builtins = ["exit", "echo","type","pwd","cd"]
 last_tab_pressed = {"count": 0, "last_text": ""}
 
 def executables():
-    executables = []
+    seen = set()
     paths = os.getenv("PATH").split(":")
+    executables = []
     for path in paths:
         if os.path.isdir(path):
-            executables.extend([f for f in os.listdir(path) if os.access(os.path.join(path, f), os.X_OK)])
+            for f in os.listdir(path):
+                if os.access(os.path.join(path, f), os.X_OK) and f not in seen:
+                    seen.add(f)
+                    executables.append(f)
     return executables
 
 def completer(text, state):
