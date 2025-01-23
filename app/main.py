@@ -17,7 +17,7 @@ def executables():
                 if os.access(os.path.join(path, f), os.X_OK) and f not in seen:
                     seen.add(f)
                     executables.append(f)
-    return executables
+    return sorted(executables)
 
 def completer(text, state):
     global last_tab_pressed
