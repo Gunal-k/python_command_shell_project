@@ -4,12 +4,20 @@ import subprocess
 import shlex
 import readline
 
-builtins = ["exit", "echo","type","pwd","cd","custom_exe_6463"]
+builtins = ["exit", "echo","type","pwd","cd"]
+
+def executables():
+    executables = []
+    paths = os.getenv("PATH").split(":")
+    for path in paths:
+        if os.path.isdir(path):
+            executables.extend([f for f in os.listdir(path) if os.access(os.path.join(path, f), os.X_OK)])
+    return executables
 
 def completer(text, state):
-    options = [s for s in builtins if s.startswith(text)]
+    options = [s for s in builtins + get_executables() if s.startswith(text)]
     if state < len(options):
-        return options[state]+" "
+        return options[state] + " "
     else:
         return None
 
