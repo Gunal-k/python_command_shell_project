@@ -20,7 +20,7 @@ def main():
         elif command.startswith("type"):
             value = command[5:]
             if value in builtins:
-                sys.stdout.write(f"{value} is a shell built-in\n")
+                sys.stdout.write(f"{value} is a shell builtin\n")
             else:
                 sys.stdout.write(f"{value}: command not found\n")
 
