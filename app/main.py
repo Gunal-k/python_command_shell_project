@@ -18,7 +18,7 @@ def main():
         elif ">" in command:
             cmnd = command.split()[0]
             command= command.split()[1].replace("1>", ">")
-            cmd , out = command.split(">")[0], command.split(">")[1]
+            cmd , out = command.split(">")
             cmd_args = shlex.split(cmd)
             for path in cmd_args:
                 if os.path.exists(path):
