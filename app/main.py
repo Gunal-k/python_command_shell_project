@@ -16,24 +16,9 @@ def main():
         if command.startswith("exit"):
             sys.exit(0)
         elif ">" in command:
-            errors = ""
-            parts = command.split(">")
-            cmd = parts[0].strip()
-            out = parts[1].strip()
-
-            cmd_args = shlex.split(cmd)
-            cmnd = cmd_args[0]
-            args = None
-
-            res = subprocess.run(command, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-            errors += f"{cmnd}: {res.stderr.decode()}: No such file directory\n"
-
-            if res.stdout:
-                with open(out, "w") as f_out:
-                    f_out.write(res.stdout.decode())
-
-            if errors:
-                sys.stdout.write(errors)
+            cmd , out = command.split(">")
+            with open(out.strip(), "w") as f:
+                f.write(cat(cmd.strip()))
         elif command.startswith("invalid"):
             sys.stdout.write(f"{command}: command not found\n")
         elif command.startswith("echo"):
@@ -65,11 +50,14 @@ def main():
                 sys.stdout.write(f"cd: {command[3:]}: No such file or directory\n")
         elif command.startswith("cat"):
             cmd = command.split(maxsplit=1)[1]
-            res = subprocess.run(cmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-            sys.stdout.write(f"{res.stdout.decode()}")
+            sys.stdout.write(cat(cmd))
         else:
             res = subprocess.run(command, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             sys.stdout.write(f"{res.stdout.decode()}")
         sys.stdout.flush()
+
+def cat(cmd):
+    res = subprocess.run(cmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    return res.stdout.decode()
 if __name__ == "__main__":
     main()
