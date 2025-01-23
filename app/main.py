@@ -16,19 +16,27 @@ def main():
         if command.startswith("exit"):
             sys.exit(0)
         elif ">" in command:
-            cmnd = command.split()[0]
-            command= command.split()[1].replace("1>", ">")
-            cmd = command.split(">")[0]
-            out = command.split(">")[1]
+            errors = ""
+            parts = command.split(">")
+            cmd = parts[0].strip()
+            out = parts[1].strip()
+
             cmd_args = shlex.split(cmd)
-            for path in cmd_args:
+            cmnd = cmd_args[0]
+            args = None
+
+            for path in cmd_args[1:]:
                 if os.path.exists(path):
-                   args = path
+                    args = path
+                    break
                 else:
-                    errors = f"{cmnd}: {path}: No such file directory\n"
-            with open(out, "w") as f:
-                with open(args, "r") as f2:
-                    f.write(f2.read())
+                    errors += f"{cmnd}: {path}: No such file directory\n"
+
+            if args:
+                with open(out, "w") as f_out:
+                    with open(args, "r") as f_in:
+                        f_out.write(f_in.read())
+
             if errors:
                 sys.stdout.write(errors)
         elif command.startswith("invalid"):
