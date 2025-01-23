@@ -19,6 +19,7 @@ def main():
             sys.stdout.write(f"{command}: command not found\n")
         elif command.startswith("echo"):
             value = command[5:]
+            value = " ".join(shlex.split(value))
             if value.startswith("'") or value.startswith('"'):
                 value = value[1:-1]
             sys.stdout.write(f"{value}\n")
