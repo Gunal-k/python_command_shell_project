@@ -28,13 +28,15 @@ def completer(text, state):
             last_tab_pressed["count"] += 1
         else:
             last_tab_pressed = {"count": 1, "last_text": text}
+    if len(options) == 1:
+        return options[0] + " "
     if last_tab_pressed["count"] == 1:
-        sys.stdout.write(options[state] + " ")
+        sys.stdout.write("\a")
         sys.stdout.flush()
         return None
     elif last_tab_pressed["count"] == 2:
-        if options2:
-            sys.stdout.write("\n" + "  ".join(options2) + "\n")
+        if options:
+            sys.stdout.write("\n" + "  ".join(sorted(options)) + "\n")
             sys.stdout.write(f"$ {text}")
             sys.stdout.flush()
         last_tab_pressed["count"] = 0
