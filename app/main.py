@@ -18,8 +18,11 @@ def main():
         elif ">" in command:
             command = command.replace("1>",">")
             cmd , out = command.split(">")
+            res = cat(cmd.strip())
             with open(out.strip(), "w") as f:
-                f.write(cat(cmd.strip()))
+                f.write(res.stdout.decode())
+            if res.stderr:
+                sys.stdout.write(f"{res.stderr.decode()}\n")
         elif command.startswith("invalid"):
             sys.stdout.write(f"{command}: command not found\n")
         elif command.startswith("echo"):
@@ -49,16 +52,13 @@ def main():
                 os.chdir(path)
             except FileNotFoundError:
                 sys.stdout.write(f"cd: {command[3:]}: No such file or directory\n")
-        elif command.startswith("cat"):
-            cmd = command
-            sys.stdout.write(cat(cmd))
         else:
-            res = subprocess.run(command, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            res = cat(command)
             sys.stdout.write(f"{res.stdout.decode()}")
         sys.stdout.flush()
 
 def cat(cmd):
     res = subprocess.run(cmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-    return res.stdout.decode()
+    return res
 if __name__ == "__main__":
     main()
