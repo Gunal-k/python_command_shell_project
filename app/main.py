@@ -18,11 +18,11 @@ def main():
         elif command.startswith("invalid"):
             sys.stdout.write(f"{command}: command not found\n")
         elif command.startswith("echo"):
-            value = command[5:]
+            value = command[5:].strip()
             if "\\" in value:
                 value = value.replace("\\","")
-            elif value.startswith("'") or value.startswith('"'):
-                value =" ".join(shlex.split(value))
+            elif value.startswith("'") and value.endswith("'"):
+                value = value[1:-1]
             else:
                 value = " ".join(shlex.split(value))
             sys.stdout.write(f"{value}\n")
