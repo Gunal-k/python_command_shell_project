@@ -15,6 +15,14 @@ def main():
 
         if command.startswith("exit"):
             sys.exit(0)
+        elif ">" in command:
+            command= command.split()[1].replace("1>", ">")
+            cmd , out = shlex.split(command)[0], shlex.split(command)[1]
+            with open(out, "w") as f:
+                with open(cmd, "r") as f2:
+                    f.write(f2.read())
+            
+
         elif command.startswith("invalid"):
             sys.stdout.write(f"{command}: command not found\n")
         elif command.startswith("echo"):
