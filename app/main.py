@@ -15,6 +15,20 @@ def main():
 
         if command.startswith("exit"):
             sys.exit(0)
+        elif "2>>" in command:
+            command = command.replace("2>>", ">>")
+            cmd , out = command.split(">>")
+            res = cat(cmd.strip())
+            with open(out.strip(), "a") as f:
+                f.write(res.stderr.decode())
+        elif ">>" in command:
+            command = command.replace("1>>",">>")
+            cmd , out = command.split(">>")
+            res = cat(cmd.strip())
+            with open(out.strip(), "a") as f:
+                f.write(res.stdout.decode())
+            if res.stderr:
+                sys.stderr.write(f"{res.stderr.decode()}")
         elif "2>" in command:
             command = command.replace("2>",">")
             cmd , out = command.split(">")
