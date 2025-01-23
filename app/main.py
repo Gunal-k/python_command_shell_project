@@ -37,7 +37,10 @@ def main():
             sys.stdout.write(f"{os.getcwd()}\n")
         elif command.startswith("cd"):
             try:
-                os.chdir(command[3:])
+                path = command[3:]
+                if command[3:] == "~":
+                    path = os.getenv("HOME")
+                os.chdir(path)
             except FileNotFoundError:
                 sys.stdout.write(f"cd: {command[3:]}: No such file or directory\n")
         else:
