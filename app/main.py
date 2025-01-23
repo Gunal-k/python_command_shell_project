@@ -16,14 +16,22 @@ def main():
         if command.startswith("exit"):
             sys.exit(0)
         elif ">" in command:
-            command = command.replace("1>",">")
-            cmd , out = command.split(">")
-            res = cat(cmd.strip())
-            with open(out.strip(), "w") as f:
-                f.write(res.stdout.decode())
-            if res.stderr:
-                sys.stderr.write(f"{res.stderr.decode()}")
-                continue
+            if "1>" in command or ">" in command:
+                command = command.replace("1>",">")
+                cmd , out = command.split(">")
+                res = cat(cmd.strip())
+                with open(out.strip(), "w") as f:
+                    f.write(res.stdout.decode())
+                if res.stderr:
+                    sys.stderr.write(f"{res.stderr.decode()}")
+            elif "2>" in command:
+                command = command.replace("2>",">")
+                cmd , out = command.split(">")
+                res = cat(cmd.strip())
+                with open(out.strip(), "w") as f:
+                    f.write(res.stderr.decode())
+                if res.stdout:
+                    sys.stdout.write(f"{res.stdout.decode()}")
         elif command.startswith("invalid"):
             sys.stdout.write(f"{command}: command not found\n")
         elif command.startswith("echo"):
