@@ -33,7 +33,7 @@ def main():
             else:
                 sys.stdout.write(f"{value}: not found\n")
         else:
-            res = subprocess.run(command, shell=True)
+            res = subprocess.run(command, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             sys.stdout.write(f"{res.stdout()}")
 if __name__ == "__main__":
     main()
