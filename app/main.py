@@ -16,13 +16,20 @@ def main():
         if command.startswith("exit"):
             sys.exit(0)
         elif ">" in command:
+            cmnd = command.split()[0]
             command= command.split()[1].replace("1>", ">")
-            cmd , out = shlex.split(command)[0], shlex.split(command)[1]
+            cmd , out = command.split(">")
+            cmd_args = shlex.split(cmd)
+            for path in cmd_args:
+                if os.path.exists(path):
+                   args = path
+                else:
+                    errors = f"{cmnd}: {path}: No such file directory\n"
             with open(out, "w") as f:
-                with open(cmd, "r") as f2:
+                with open(args, "r") as f2:
                     f.write(f2.read())
-            
-
+            if errors:
+                sys.stdout.write(errors)
         elif command.startswith("invalid"):
             sys.stdout.write(f"{command}: command not found\n")
         elif command.startswith("echo"):
@@ -52,6 +59,10 @@ def main():
                 os.chdir(path)
             except FileNotFoundError:
                 sys.stdout.write(f"cd: {command[3:]}: No such file or directory\n")
+        elif command.startswith("cat"):
+            cmd = command.split(maxsplit=1)[1]
+            res = subprocess.run(cmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            sys.stdout.write(f"{res.stdout.decode()}")
         else:
             res = subprocess.run(command, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             sys.stdout.write(f"{res.stdout.decode()}")
