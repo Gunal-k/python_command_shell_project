@@ -4,7 +4,7 @@ import subprocess
 import shlex
 import readline
 
-builtins = ["exit", "echo","type","pwd","cd"]
+builtins = ["exit", "echo","type","pwd","cd","custom_executable"]
 
 def completer(text, state):
     options = [s for s in builtins if s.startswith(text)]
