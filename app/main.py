@@ -49,7 +49,7 @@ def main():
             except FileNotFoundError:
                 sys.stdout.write(f"cd: {command[3:]}: No such file or directory\n")
         elif command.startswith("cat"):
-            cmd = command.split(maxsplit=1)[1]
+            cmd = command
             sys.stdout.write(cat(cmd))
         else:
             res = subprocess.run(command, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
