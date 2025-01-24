@@ -4,7 +4,7 @@ import subprocess
 import shlex
 import readline
 
-builtins = ["exit", "echo","type","pwd","cd","custom"]
+builtins = ["exit", "echo","type","pwd","cd"]
 last_tab_pressed = {"count": 0, "last_text": ""}
 
 def executables():
