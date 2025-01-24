@@ -28,10 +28,10 @@ def completer(text, state):
             last_tab_pressed["count"] += 1
         else:
             last_tab_pressed = {"count": 1, "last_text": text}
-    if last_tab_pressed["count"] == 1:
-        sys.stdout.write(options2[state] + " ")
-        sys.stdout.flush()
-        return None
+    # if last_tab_pressed["count"] == 1:
+    #     sys.stdout.write(options2[state] + " ")
+    #     sys.stdout.flush()
+    #     return None
     elif last_tab_pressed["count"] == 2:
         if options2:
             sys.stdout.write("\n" + "  ".join(options2) + "\n")
