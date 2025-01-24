@@ -4,7 +4,7 @@ import subprocess
 import shlex
 import readline
 
-builtins = ["exit", "echo","type","pwd","cd"]
+builtins = ["exit", "echo","type","pwd","cd","custom"]
 last_tab_pressed = {"count": 0, "last_text": ""}
 
 def executables():
@@ -21,7 +21,7 @@ def executables():
 
 def completer(text, state):
     global last_tab_pressed
-    options = [s for s in builtins if s.startswith(text)]
+    #options = [s for s in builtins if s.startswith(text)]
     options2 = [s for s in builtins + executables() if s.startswith(text)]
     if state == 0:
         if last_tab_pressed["last_text"] == text:
@@ -29,7 +29,7 @@ def completer(text, state):
         else:
             last_tab_pressed = {"count": 1, "last_text": text}
     if last_tab_pressed["count"] == 1:
-        sys.stdout.write(options[state] + " ")
+        sys.stdout.write(options2[state] + " ")
         sys.stdout.flush()
         return None
     elif last_tab_pressed["count"] == 2:
@@ -39,7 +39,7 @@ def completer(text, state):
             sys.stdout.flush()
         last_tab_pressed["count"] = 0
         return None
-    return options[state] if state < len(options2) else None
+    return options2[state] if state < len(options2) else None
 
 def main():
     # Uncomment this block to pass the first stage
